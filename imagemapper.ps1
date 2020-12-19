@@ -314,10 +314,7 @@ If ($Source -ne '')
                 $LonOrt = $LonOrt + $LonDec
 
                 # Add information to KML File
-                $HTML1 = "<![CDATA[<center><img src=""images/" 
-                $HTML2 = $ImgName + ('"')
-                $HTML3 = ' width="500" height="334"><br></center>]]>'
-                $ImgEmbed = $HTML1 + $HTML2 + $HTML3
+                $ImgEmbed = "<![CDATA[<center><img src=""images/" + $ImgName + ('"') + ' width="500" height="334"><br></center>]]>'
                 $PlaceMrkDesc = "$ImgBaseName`r`n$ImgFolderPath`r`n$ImgEmbed`r`n`r`nCreate Time: $ImgDateCreated `r`nAccess Time: $ImgDateAccessed`r`nModified Time: $ImgDateModified`r`n`r`nMD5 Hash: $ImgMD5`r`nSHA1 Hash: $ImgSHA`r`nSHA256 Hash: $ImgSHA256`r`n`r`nLatitude: $Latort`r`nLongitude: $LonOrt`r`nAltitude: $Alt`r`nAbove Sea Level: $SeaLev"
                 AddKMLPlacemark $ImgName $PlaceMrkDesc $LonOrt $LatOrt $Alt
 
