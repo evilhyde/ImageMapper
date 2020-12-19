@@ -63,7 +63,7 @@ Function AddCSV
     + "$ImgPeople`",`"$ImgProgMode`",`"$ImgSaturation`",`"$ImgSubDist`",`"$ImgWhiteBal`",`"$ImgPriority`",`"" `
     + "$ImgGPS`",`"$LatOrt`",`"$LonOrt`",`"$Alt`",`"$SeaLev`""
 
-    Add-Content $CSVFile $CSVContent
+    Add-Content $CSVFile $CSVContent -Encoding UTF8
 }
 
 Function ImageMetaDataExtract
@@ -105,6 +105,7 @@ If ($Source -ne '')
             }
             $TargetPath = $Target + "\" + $TargetFileName + "-imagemapper"
             New-Item $TargetPath -Type Directory
+            Copy-Item -LiteralPath $Source -Recurse -Destination $TargetPath
         }
         else
         {
@@ -244,6 +245,7 @@ If ($Source -ne '')
                 $ImgLastAccess = $Image.LastAccessTime
                 $ImgReadOnly = $Image.IsReadOnly
                 $ImgFilePath = $Image.FullName
+                $ImgEmbed = "<![CDATA[<center><img src=""images/" + $ImgName + ('"') + ' width="500" height="334"><br></center>]]>'
 
             $Hashes = Hashfile
             $ImgMD5 = $Hashes[0]
@@ -314,7 +316,6 @@ If ($Source -ne '')
                 $LonOrt = $LonOrt + $LonDec
 
                 # Add information to KML File
-                $ImgEmbed = "<![CDATA[<center><img src=""images/" + $ImgName + ('"') + ' width="500" height="334"><br></center>]]>'
                 $PlaceMrkDesc = "$ImgBaseName`r`n$ImgFolderPath`r`n$ImgEmbed`r`n`r`nCreate Time: $ImgDateCreated `r`nAccess Time: $ImgDateAccessed`r`nModified Time: $ImgDateModified`r`n`r`nMD5 Hash: $ImgMD5`r`nSHA1 Hash: $ImgSHA`r`nSHA256 Hash: $ImgSHA256`r`n`r`nLatitude: $Latort`r`nLongitude: $LonOrt`r`nAltitude: $Alt`r`nAbove Sea Level: $SeaLev"
                 AddKMLPlacemark $ImgName $PlaceMrkDesc $LonOrt $LatOrt $Alt
 
