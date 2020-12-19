@@ -81,7 +81,7 @@ Function AddKMLPlacemark ($ImgName, $ImgDesc, $ImgLon, $ImgLat, $ImgAlt)
 
 Function HashFile
 {
-    $MD5Hash =  Get-FileHash -Path $ImgFilePath -Algorithm MD5
+    #$MD5Hash =  Get-FileHash -Path $ImgFilePath -Algorithm MD5
     $SHAHash = Get-FileHash -Path $ImgFilePath -Algorithm SHA1
     $SHA256Hash = Get-FileHash -Path $ImgFilePath -Algorithm SHA256
     Return $MD5Hash.Hash, $SHAHash.Hash, $SHA256Hash.Hash
