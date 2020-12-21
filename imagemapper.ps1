@@ -105,7 +105,12 @@ If ($Source -ne '')
             }
             $TargetPath = $Target + "\" + $TargetFileName + "-imagemapper"
             New-Item $TargetPath -Type Directory
-            Copy-Item -LiteralPath $Source -Recurse -Destination "$TargetPath\images"
+            Write-Host "Target Path not specified, will create a folder on the Desktop on $TargetPath"-foregroundcolor red -backgroundcolor yellow
+            Write-Host "Do you want to copy the source pictures to the Desktop as well? y/n" -foregroundcolor red -backgroundcolor yellow -NoNewline
+            $CopyDesktop = Read-Host
+            If ($CopyDesktop -eq "y") {
+                Copy-Item -LiteralPath $Source -Recurse -Destination "$TargetPath\images"
+            }
         }
         else
         {
@@ -245,7 +250,13 @@ If ($Source -ne '')
                 $ImgLastAccess = $Image.LastAccessTime
                 $ImgReadOnly = $Image.IsReadOnly
                 $ImgFilePath = $Image.FullName
-                $ImgEmbed = "<![CDATA[<center><img src=""images/" + $ImgName + ('"') + ' width="500" height="334"><br></center>]]>'
+                If ($CopyDesktop -eq "y"){
+                    $ImgEmbed = "<![CDATA[<center><img src=""images/" + $ImgName + ('"') + ' width="500" height="334"><br></center>]]>'
+                }
+                else {
+                    $ImgEmbed = "<![CDATA[<center><img src=""file:///$Source\" + $ImgName + ('"') + ' width="500" height="334"><br></center>]]>'
+                }
+                
 
             $Hashes = Hashfile
             $ImgMD5 = $Hashes[0]
