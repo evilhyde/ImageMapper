@@ -105,7 +105,7 @@ If ($Source -ne '')
             }
             $TargetPath = $Target + "\" + $TargetFileName + "-imagemapper"
             New-Item $TargetPath -Type Directory
-            Copy-Item -LiteralPath $Source -Recurse -Destination $TargetPath
+            Copy-Item -LiteralPath $Source -Recurse -Destination "$TargetPath\images"
         }
         else
         {
